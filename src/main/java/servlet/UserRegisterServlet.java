@@ -3,7 +3,6 @@ package servlet;
 import bean.User;
 import bean.Value;
 import com.alibaba.fastjson.JSONObject;
-import dao.Dao;
 import dao.UserMapper;
 import org.apache.commons.codec.digest.DigestUtils;
 import utils.DaoUtils;

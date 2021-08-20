@@ -2,9 +2,7 @@ package servlet;
 
 import bean.User;
 import com.alibaba.fastjson.JSONObject;
-import dao.Dao;
 import dao.UserMapper;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.JOniException;
 import utils.DaoUtils;
 
 import javax.servlet.ServletException;

@@ -1,7 +1,6 @@
 package bean;
 
 import com.alibaba.fastjson.JSONObject;
-import dao.Dao;
 import dao.UserMapper;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
