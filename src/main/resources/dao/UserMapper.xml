@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserMapper">
+
+    <select id="checkUser" resultType="bean.User" parameterType="bean.User">
+        select (count(case when (user_phone = #{user_phone} and user_pwd = #{user_pwd}) then 1 else null end) +
+                count(case when user_phone = #{user_phone} then 1 else null end)) as status,
+               user_id,
+               user_name,
+               user_phone,
+               user_gender,
+               user_sign,
+               user_img
+        from im.users
+        where user_phone = #{user_phone}
+    </select>
+
+    <insert id="createUser" parameterType="bean.User">
+        insert into im.users(user_phone, user_pwd, user_name, user_gender, user_sign, user_img, img_hex)
+        values (#{user_phone}, #{user_pwd}, #{user_name}, #{user_gender}, #{user_sign}, #{user_img}, #{img_hex})
+    </insert>
+
+    <select id="checkHead" parameterType="String" resultType="String">
+        select user_img
+        from im.users
+        where img_hex = #{hex}
+    </select>
+
+    <select id="baseInfo" parameterType="bean.User" resultType="bean.User">
+        select user_id, user_phone, user_pwd, user_name, user_gender, user_sign, user_img
+        from im.users
+        where user_phone = #{user_phone}
+          and user_pwd = #{user_pwd}
+    </select>
+
+    <select id="searchUser" parameterType="bean.User" resultType="bean.User">
+        select *
+        from im.users
+        where user_phone = #{user_phone}
+    </select>
+
+    <select id="checkPhone" parameterType="bean.User" resultType="int">
+        select count(*)
+        from im.users
+        where user_phone = #{user_phone}
+    </select>
+
+    <select id="getContacts" parameterType="bean.User" resultType="bean.Contact">
+        select user_id, user_name, c.group_id as contact_id, group_name as contact_name, group_img as contact_img, type
+        from (select *
+              from (select user_name from users where user_id = ${user_id}) as s
+                       inner join
+                   (select item_id, user_id, group_id, type
+                    from im.members
+                    where user_id = ${user_id}
+                    union all
+                    select item_id, user_id, friend_id, type
+                    from im.friends
+                    where user_id = ${user_id}) as e) as c
+                 inner join im.groups on groups.group_id = c.group_id and type = 1
+        union all
+        select c.user_id,
+               c.user_name,
+               group_id        as contact_id,
+               users.user_name as contact_name,
+               user_img        as contact_img,
+               type
+        from (select *
+              from (select user_name from users where user_id = ${user_id}) as s
+                       inner join
+                   (select item_id, user_id, group_id, type
+                    from im.members
+                    where user_id = ${user_id}
+                    union all
+                    select item_id, user_id, friend_id, type
+                    from im.friends
+                    where user_id = ${user_id}) as e) as c
+                 inner join users on c.group_id = users.user_id and type = 0
+    </select>
+
+    <select id="getContacts2" parameterType="bean.User" resultType="bean.Contact">
+        select group_id as contact_id, type
+        from im.members
+        where user_id = ${user_id}
+        union all
+        select friend_id as contact_id, type
+        from im.friends
+        where user_id = ${user_id}
+    </select>
+
+    <select id="getGroupContact" parameterType="bean.Contact" resultType="bean.Contact">
+        select group_name as contact_name, group_img as contact_img
+        from im.groups
+        where group_id = ${contact_id}
+    </select>
+
+    <select id="getUserContact" parameterType="bean.Contact" resultType="bean.Contact">
+        select user_name as contact_name, user_img as contact_img
+        from im.users
+        where user_id = ${contact_id}
+    </select>
+
+    <select id="getContacts3" parameterType="bean.User" resultMap="ContactMap">
+        select group_id as contact_id, type
+        from im.members
+        where user_id = ${user_id}
+        union all
+        select friend_id as contact_id, type
+        from im.friends
+        where user_id = ${user_id}
+    </select>
+
+    <resultMap id="ContactMap" type="bean.Contact">
+        <id property="contact_id" column="contact_id"/>
+        <result property="type" column="type"/>
+        <association property="contact_name" column="contact_id,type" select="selectName" javaType="String"/>
+        <association property="contact_img" column="contact_id,type" select="selectImg" javaType="String"/>
+    </resultMap>
+
+    <select id="selectName" parameterType="bean.Contact" resultType="String">
+        select
+        <if test="type=0">
+            user_name as contact_name
+        </if>
+        <if test="type=1">
+            group_name as contact_name
+        </if>
+        from
+        <if test="type=0">im.users</if>
+        <if test="type=1">im.groups</if>
+        where
+        <if test="type=0">user_id=${contact_id}</if>
+        <if test="type=1">group_id=${contact_id}</if>
+    </select>
+
+    <select id="selectImg" parameterType="bean.Contact" resultType="String">
+        select
+        <if test="type=0">
+            user_img as contact_img
+        </if>
+        <if test="type=1">
+            group_img as contact_img
+        </if>
+        from
+        <if test="type=0">im.users</if>
+        <if test="type=1">im.groups</if>
+        where
+        <if test="type=0">user_id=${contact_id}</if>
+        <if test="type=1">group_id=${contact_id}</if>
+    </select>
+
+    <select id="selectFriend" parameterType="int" resultType="bean.Friend">
+        select *
+        from im.friends
+        where friend_id = #{id}
+    </select>
+
+    <update id="updateFriend" parameterType="bean.Friend">
+        update im.friends
+        set friend_note=#{friend_note},
+            notice_rank=#{notice_rank}
+        where user_id = #{user_id}
+          and friend_id = #{friend_id}
+    </update>
+
+    <insert id="addFriend" parameterType="bean.Friend">
+        insert into im.friends(user_id, friend_id, friend_note, notice_rank)
+        VALUES (#{user_id}, #{friend_id}, #{friend_note}, #{notice_rank})
+    </insert>
+
+</mapper>
