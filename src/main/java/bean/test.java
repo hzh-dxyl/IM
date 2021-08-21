@@ -10,9 +10,30 @@ import org.apache.commons.codec.digest.DigestUtils;
 import utils.DaoUtils;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class test {
     public static void main(String[] args) throws IOException {
+        User user=new User();
+        user.setUser_id(1);
+        UserMapper mapper= DaoUtils.getMapper(UserMapper.class);
+        try {
+            ArrayList<Contact> contacts = mapper.getContacts(user);
+            user.setContacts(contacts);
+            user.setStatus(2);
+            String result = JSONObject.toJSONString(user);
+            System.out.println("获取联系人：" + result);
+            JSONObject object=JSONObject.parseObject(result);
+            ArrayList<Contact> contacts1= (ArrayList<Contact>) JSONObject.parseArray(object.getString("contacts"),Contact.class);
+            System.out.println(contacts1.get(0).getContact_name());
+        }
+        finally {
+            DaoUtils.close();
+            //dao.closeSession();
+        }
+    }
+
+    public static void testClass2Object(){
         User user=new User();
         user.setUser_id(1);
         user.setUser_phone("132321");
@@ -30,6 +51,7 @@ public class test {
         friend.setFriend_note(null);
         friend.setNotice_rank(1);
         int i=mapper.updateFriend(friend);
+        DaoUtils.close();
     }
 
     public static void testSearch() throws IOException {

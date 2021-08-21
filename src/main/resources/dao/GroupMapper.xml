@@ -2,10 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.GroupMapper">
 
+    <resultMap id="MemberMap" type="bean.Member" autoMapping="true">
+        <id property="group_id" column="group_id"/>
+        <result property="user_id" column="user_id"/>
+        <association property="user_name" column="user_id" select="selectUserName" javaType="String"/>
+        <association property="user_img" column="user_id" select="selectUserImg" javaType="String"/>
+    </resultMap>
+
     <insert id="createGroup" parameterType="bean.Group">
         insert into im.groups(group_name, group_img)
         values (#{group_name}, #{group_img})
     </insert>
 
+    <select id="getGroupMembers" parameterType="bean.Group" resultMap="MemberMap">
+        select *
+        from im.members
+        where group_id = #{group_id}
+    </select>
+
+    <select id="selectGroup" parameterType="bean.Group" resultType="bean.Group">
+        select *
+        from im.groups
+        where group_id = #{group_id}
+    </select>
+
+    <select id="selectUserName" parameterType="int" resultType="String">
+        select user_name from im.users where user_id=#{user_id}
+    </select>
+
+    <select id="selectUserImg" parameterType="int" resultType="String">
+        select user_img from im.users where user_id=#{user_id}
+    </select>
+
+    <select id="selectFriend_note" parameterType="int" resultType="String">
+        select friend_note from im.friends where user_id=#{user_id} and friend_id=#{friend_id}
+    </select>
 
 </mapper>

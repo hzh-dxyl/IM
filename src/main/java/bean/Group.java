@@ -1,10 +1,21 @@
 package bean;
 
+import java.util.ArrayList;
+
 public class Group {
     private int group_id;
     private String group_name;
     private String group_img;
     private String group_notice; //群公告
+    private ArrayList<Member> members;  //群成员
+
+    public ArrayList<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(ArrayList<Member> members) {
+        this.members = members;
+    }
 
     public int getGroup_id() {
         return group_id;
