@@ -17,8 +17,9 @@ public interface UserMapper {
     Contact getUserContact(Contact contact);
     Contact getGroupContact(Contact contact);
     User searchUser(User user);
-    Friend selectFriend(int id);
+    User selectUser(int id);
+    int updateUser(User user);
+    Friend selectFriend(Friend friend);
     int updateFriend(Friend friend);
     int addFriend(Friend friend);
-    int updateUser(User user);
 }

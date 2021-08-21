@@ -15,6 +15,10 @@
         where user_phone = #{user_phone}
     </select>
 
+    <select id="selectUser" parameterType="int" resultType="bean.User">
+        select * from im.users where user_id=#{id}
+    </select>
+
     <insert id="createUser" parameterType="bean.User">
         insert into im.users(user_phone, user_pwd, user_name, user_gender, user_sign, user_img, img_hex)
         values (#{user_phone}, #{user_pwd}, #{user_name}, #{user_gender}, #{user_sign}, #{user_img}, #{img_hex})
@@ -159,10 +163,10 @@
         <if test="type=1">group_id=${contact_id}</if>
     </select>
 
-    <select id="selectFriend" parameterType="int" resultType="bean.Friend">
+    <select id="selectFriend" parameterType="bean.Friend" resultType="bean.Friend">
         select *
         from im.friends
-        where friend_id = #{id}
+        where friend_id = #{friend_id} and user_id=#{user_id}
     </select>
 
     <update id="updateFriend" parameterType="bean.Friend">
