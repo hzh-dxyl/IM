@@ -8,4 +8,5 @@ public class Value {
             "b103d99e2ac9651f1e69650181178fc8"};
     public static String imgLocalPath = "D:/课程/maven/IM/src/main/webapp/images/";
     public static String defaultHeadPath= "images/default";
+    public static String defaultGroupHead ="group.png";
 }
