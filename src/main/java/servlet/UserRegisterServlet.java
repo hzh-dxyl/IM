@@ -57,6 +57,10 @@ public class UserRegisterServlet extends HttpServlet {
                 response.getWriter().print("{msg:\"register success\"}");
                 System.out.println("注册成功：" + JSONObject.toJSONString(user));
             }
+            else {
+                response.getWriter().print("{msg:\"register failed\"}");
+                System.out.println("注册失败");
+            }
         }
         catch (Exception e){
             e.printStackTrace();
