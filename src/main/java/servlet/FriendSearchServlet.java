@@ -33,6 +33,7 @@ public class FriendSearchServlet extends HttpServlet {
             friend = mapper.selectFriend(friend);
             User user = mapper.selectUser(friend.getFriend_id());
             JSONObject object = (JSONObject) JSONObject.toJSON(user);
+            object.remove("user_pwd");
             object.put("friend_note", friend.getFriend_note());
             object.put("notice_rank", friend.getNotice_rank());
             String result = JSONObject.toJSONString(object);
