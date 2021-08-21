@@ -20,4 +20,5 @@ public interface UserMapper {
     Friend selectFriend(int id);
     int updateFriend(Friend friend);
     int addFriend(Friend friend);
+    int updateUser(User user);
 }

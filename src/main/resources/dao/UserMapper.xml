@@ -20,6 +20,16 @@
         values (#{user_phone}, #{user_pwd}, #{user_name}, #{user_gender}, #{user_sign}, #{user_img}, #{img_hex})
     </insert>
 
+    <update id="updateUser" parameterType="bean.User">
+        update im.users
+        set user_gender=#{user_gender},
+            user_name=#{user_name},
+            user_pwd=#{user_pwd},
+            user_sign=#{user_sign},
+            user_img=#{user_img}
+        where user_id = #{user_id}
+    </update>
+
     <select id="checkHead" parameterType="String" resultType="String">
         select user_img
         from im.users
