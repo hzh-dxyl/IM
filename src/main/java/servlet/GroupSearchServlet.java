@@ -25,7 +25,7 @@ public class GroupSearchServlet extends HttpServlet {
         HttpSession session=request.getSession();
         response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding("utf-8");
-        String json =request.getParameter("json");  //传group_id
+        String json =request.getParameter("json");  //传group_id和user_id
         JSONObject object=JSONObject.parseObject(json);
         int user_id=object.getInteger("user_id");
         Group group= JSONObject.parseObject(json,Group.class);
