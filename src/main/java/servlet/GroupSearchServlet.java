@@ -39,7 +39,7 @@ public class GroupSearchServlet extends HttpServlet {
             }
             group.setMembers(members);
             String result=JSONObject.toJSONString(group);
-            System.out.println(result);
+            System.out.println("查看群信息："+result);
             response.getWriter().print(result);
         }
         finally {
