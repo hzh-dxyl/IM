@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class DaoUtils {
+public final class DaoUtils {
     /**
      * 1.创建和初始化SqlSessionFactory
      * 2.能够创建在一定范围内（线程）有效的SqlSession
@@ -28,12 +28,13 @@ public class DaoUtils {
      *  * 多线程环境下访问SqlSession是同一个么、需要是同一个么？  不是同一个
      *  * 单线程环境下访问SqlSession是同一个么、需要是同一个么？  是同一个
      */
-    static final String CONFIG_FILE = "dao/mybatis-config.xml";
-    static SqlSessionFactory factory;
-    static ThreadLocal<SqlSession> threadLocal = new ThreadLocal<>();
+    private static final String CONFIG_FILE = "dao/mybatis-config.xml";
+    private static SqlSessionFactory factory;
+    private static final ThreadLocal<SqlSession> threadLocal = new ThreadLocal<>();
     static{
         initFactory(CONFIG_FILE);
     }
+    private DaoUtils(){}
     public static void initFactory(String configName){
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
         try {
@@ -57,7 +58,7 @@ public class DaoUtils {
         SqlSession session = threadLocal.get();
         if(session!=null){
             session.close();
-            threadLocal.set(null);
+            threadLocal.remove();
         }
     }
     public static void commit(){
