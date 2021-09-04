@@ -5,7 +5,15 @@ public class Contact {
     private int contact_id;
     private String contact_name;
     private String contact_img;
+    private String user_phone;
 
+    public String getUser_phone() {
+        return user_phone;
+    }
+
+    public void setUser_phone(String user_phone) {
+        this.user_phone = user_phone;
+    }
 
     public int getType() {
         return type;

@@ -60,7 +60,7 @@
     </select>
 
     <select id="getContacts" parameterType="bean.User" resultType="bean.Contact">
-        select user_id, user_name, c.group_id as contact_id, group_name as contact_name, group_img as contact_img, type
+        select user_id, user_name, user_name as user_phone, c.group_id as contact_id, group_name as contact_name, group_img as contact_img, type
         from (select *
               from (select user_name from users where user_id = ${user_id}) as s
                        inner join
@@ -75,6 +75,7 @@
         union all
         select c.user_id,
                c.user_name,
+               user_phone,
                group_id        as contact_id,
                users.user_name as contact_name,
                user_img        as contact_img,
