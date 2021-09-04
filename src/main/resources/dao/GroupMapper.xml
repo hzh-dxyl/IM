@@ -30,7 +30,7 @@
         select user_name from im.users where user_id=#{user_id}
     </select>
 
-    <select id="selectPhone" parameterType="int">
+    <select id="selectPhone" parameterType="int" resultType="String">
         select user_phone from im.users where user_id=#{id}
     </select>
 
@@ -42,5 +42,7 @@
     <select id="selectFriend_note" parameterType="int" resultType="String">
         select friend_note from im.friends where user_id=#{user_id} and friend_id=#{friend_id}
     </select>
+
+
 
 </mapper>
