@@ -10,6 +10,4 @@ public class Value {
     public static String defaultHeadPath= "images/default";
     public static String defaultGroupHead ="group.png";
 
-    public static final String Access_key="LTAI5tEUG7Jw2FvkSpSL3vxV";
-    public static final String Secret_key="DTtXJ97uOv974Z7y3A4FoF8d2mrRTM";
 }
