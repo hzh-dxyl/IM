@@ -36,6 +36,7 @@ public class GroupSearchServlet extends HttpServlet {
             ArrayList<Member> members=mapper.getGroupMembers(group);
             for (Member member:members){
                 member.setFriend_note(mapper.selectFriend_note(user_id,member.getUser_id()));
+                member.setUser_phone(mapper.selectPhone(member.getUser_id()));
             }
             group.setMembers(members);
             String result=JSONObject.toJSONString(group);

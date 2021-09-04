@@ -11,4 +11,5 @@ public interface GroupMapper {
     ArrayList<Member> getGroupMembers(Group group);
     Group selectGroup(Group group);
     String selectFriend_note(@Param("user_id")int user_id,@Param("friend_id") int friend_id);
+    String selectPhone(int id);
 }

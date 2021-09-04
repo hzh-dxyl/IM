@@ -30,6 +30,11 @@
         select user_name from im.users where user_id=#{user_id}
     </select>
 
+    <select id="selectPhone" parameterType="int">
+        select user_phone from im.users where user_id=#{id}
+    </select>
+
+
     <select id="selectUserImg" parameterType="int" resultType="String">
         select user_img from im.users where user_id=#{user_id}
     </select>
