@@ -13,4 +13,5 @@ public interface GroupMapper {
     String selectFriend_note(@Param("user_id")int user_id,@Param("friend_id") int friend_id);
     String selectPhone(int id);
     int updateMember(Member member);
+    int addMember(Member member);
 }

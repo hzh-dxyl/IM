@@ -60,4 +60,8 @@
           and group_id = #{group_id}
     </update>
 
+    <insert id="addMember" parameterType="bean.Member">
+        insert into im.members(group_id, user_id, nickname, members.`rank`)
+        values (#{group_id}, #{user_id}, #{nickname}, members.`rank`)
+    </insert>
 </mapper>
