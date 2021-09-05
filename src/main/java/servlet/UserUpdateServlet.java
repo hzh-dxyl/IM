@@ -20,8 +20,11 @@ import java.io.IOException;
 public class UserUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session=request.getSession();
+        request.setCharacterEncoding("utf-8");
         String json=request.getParameter("json");
+        System.out.println("修改自己信息："+json);
         User user= JSONObject.parseObject(json,User.class);
+        System.out.println(user.getUser_gender());
         UserMapper mapper= DaoUtils.getMapper(UserMapper.class);
         try {
             if(user.getImg_data()!=null) {

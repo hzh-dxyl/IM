@@ -18,6 +18,7 @@ import java.io.IOException;
 public class GroupAddMemberServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session=request.getSession();
+        request.setCharacterEncoding("utf-8");
         String json =request.getParameter("json");
         Member member= JSONObject.parseObject(json,Member.class);
         GroupMapper mapper=DaoUtils.getMapper(GroupMapper.class);

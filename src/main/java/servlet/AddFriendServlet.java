@@ -22,6 +22,7 @@ public class AddFriendServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session=request.getSession();
+        request.setCharacterEncoding("utf-8");
         String json=request.getParameter("json");
         Friend friend=JSONObject.parseObject(json,Friend.class);
         UserMapper mapper= DaoUtils.getMapper(UserMapper.class);

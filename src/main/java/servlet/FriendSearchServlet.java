@@ -23,6 +23,7 @@ public class FriendSearchServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session=request.getSession();
+        request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding("utf-8");
         String json=request.getParameter("json");
