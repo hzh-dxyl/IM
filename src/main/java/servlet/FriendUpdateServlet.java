@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "FriendNoteServlet",urlPatterns = "/friendNote")
-public class FriendNoteServlet extends HttpServlet {
+@WebServlet(name = "FriendUpdateServlet",urlPatterns = "/friendUpdate")
+public class FriendUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
