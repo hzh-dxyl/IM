@@ -9,7 +9,7 @@
         <association property="user_img" column="user_id" select="selectUserImg" javaType="String"/>
     </resultMap>
 
-    <insert id="createGroup" parameterType="bean.Group">
+    <insert id="createGroup" parameterType="bean.Group" keyProperty="group_id">
         insert into im.groups(group_name, group_img)
         values (#{group_name}, #{group_img})
     </insert>
@@ -61,7 +61,7 @@
     </update>
 
     <insert id="addMember" parameterType="bean.Member">
-        insert into im.members(group_id, user_id, nickname, members.`rank`)
-        values (#{group_id}, #{user_id}, #{nickname}, members.`rank`)
+        insert into im.members(group_id, user_id, nickname, members.rank)
+        values (#{group_id}, #{user_id}, #{nickname}, #{rank})
     </insert>
 </mapper>

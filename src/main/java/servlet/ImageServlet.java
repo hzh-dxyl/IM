@@ -19,10 +19,10 @@ public class ImageServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        String url=request.getServletPath().split("images/")[1];
-        System.out.println("打开图片："+url);
-        String pattern=url.split("\\.")[1];
-        String file = Value.imgLocalPath+url;
+        String path=request.getServletPath().split("images/")[1];
+        System.out.println("打开图片："+request.getServletPath());
+        String pattern=path.split("\\.")[1];
+        String file = Value.imgLocalPath+path;
         FileInputStream fileInputStream = new FileInputStream(file);
         int size = fileInputStream.available();
         byte[] bytes = new byte[size];

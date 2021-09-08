@@ -16,7 +16,9 @@
     </select>
 
     <select id="selectUser" parameterType="int" resultType="bean.User">
-        select * from im.users where user_id=#{id}
+        select *
+        from im.users
+        where user_id = #{id}
     </select>
 
     <insert id="createUser" parameterType="bean.User">
@@ -30,9 +32,16 @@
             user_name=#{user_name},
             user_pwd=#{user_pwd},
             user_sign=#{user_sign},
-            user_img=#{user_img}
+            user_img=#{user_img},
+            img_hex=#{img_hex}
         where user_id = #{user_id}
     </update>
+
+    <select id="selectHex" parameterType="bean.User">
+        select img_hex
+        from im.users
+        where user_id = #{user_id}
+    </select>
 
     <select id="checkHead" parameterType="String" resultType="String">
         select user_img
@@ -60,7 +69,13 @@
     </select>
 
     <select id="getContacts" parameterType="bean.User" resultType="bean.Contact">
-        select user_id, user_name, user_name as user_phone, c.group_id as contact_id, group_name as contact_name, group_img as contact_img, type
+        select user_id,
+               user_name,
+               user_name  as user_phone,
+               c.group_id as contact_id,
+               group_name as contact_name,
+               group_img  as contact_img,
+               type
         from (select *
               from (select user_name from users where user_id = ${user_id}) as s
                        inner join
@@ -167,7 +182,8 @@
     <select id="selectFriend" parameterType="bean.Friend" resultType="bean.Friend">
         select *
         from im.friends
-        where friend_id = #{friend_id} and user_id=#{user_id}
+        where friend_id = #{friend_id}
+          and user_id = #{user_id}
     </select>
 
     <update id="updateFriend" parameterType="bean.Friend">

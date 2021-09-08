@@ -28,7 +28,11 @@ public class AddFriendServlet extends HttpServlet {
         UserMapper mapper= DaoUtils.getMapper(UserMapper.class);
         try {
             int i=mapper.addFriend(friend);
-            System.out.println("添加好友结果："+i);
+            int user_id =friend.getFriend_id();
+            friend.setFriend_id(friend.getUser_id());
+            friend.setUser_id(user_id);
+            int j=mapper.addFriend(friend);
+            System.out.println("添加好友结果："+i+j);
             if(i==1) response.getWriter().print("{msg:\"add success\"}");
             else response.getWriter().print("{msg:\"add failed\"}");
         }

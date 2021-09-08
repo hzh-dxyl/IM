@@ -22,4 +22,5 @@ public interface UserMapper {
     Friend selectFriend(Friend friend);
     int updateFriend(Friend friend);
     int addFriend(Friend friend);
+    String selectHex(User user);
 }

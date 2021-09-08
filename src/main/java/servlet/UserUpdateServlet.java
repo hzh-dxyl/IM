@@ -36,7 +36,9 @@ public class UserUpdateServlet extends HttpServlet {
                 } else {
                     user.setUser_img(imgName);
                 }
+                user.setImg_hex(md5Hex);
             }
+            else user.setImg_hex(mapper.selectHex(user));
             int i=mapper.updateUser(user);
             if(i==1) response.getWriter().print("{msg:\"update success\"}");
             else response.getWriter().print("{msg:\"update failed\"}");
