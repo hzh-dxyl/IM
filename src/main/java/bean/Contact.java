@@ -1,26 +1,43 @@
 package bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 public class Contact {
-    private int type; //0为人，1为群
+    @JSONField(name = "type")
+    private int contact_type; //0为人，1为群
+    @JSONField(name = "user_id")
     private int contact_id;
+    @JSONField(name = "user_name")
     private String contact_name;
+    @JSONField(name = "user_img")
     private String contact_img;
-    private String user_phone;
+    @JSONField(name = "user_phone")
+    private String contact_phone;
+    @JSONField(name = "user_note")
+    private String contact_note;
 
-    public String getUser_phone() {
-        return user_phone;
+    public String getContact_note() {
+        return contact_note;
     }
 
-    public void setUser_phone(String user_phone) {
-        this.user_phone = user_phone;
+    public void setContact_note(String contact_note) {
+        this.contact_note = contact_note;
     }
 
-    public int getType() {
-        return type;
+    public String getContact_phone() {
+        return contact_phone;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setContact_phone(String contact_phone) {
+        this.contact_phone = contact_phone;
+    }
+
+    public int getContact_type() {
+        return contact_type;
+    }
+
+    public void setContact_type(int contact_type) {
+        this.contact_type = contact_type;
     }
 
     public int getContact_id() {

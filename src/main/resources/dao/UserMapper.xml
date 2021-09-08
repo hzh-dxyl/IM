@@ -69,43 +69,40 @@
     </select>
 
     <select id="getContacts" parameterType="bean.User" resultType="bean.Contact">
-        select user_id,
-               user_name,
-               user_name  as user_phone,
-               c.group_id as contact_id,
-               group_name as contact_name,
-               group_img  as contact_img,
-               type
+        select c.user_id,
+               c.user_name,
+               c.group_id          as contact_id,
+               `groups`.group_name as contact_name,
+               null                as contact_phone,
+               `groups`.group_img  as contact_img,
+               null                as contact_note,
+               c.type              as contact_type
         from (select *
               from (select user_name from users where user_id = ${user_id}) as s
                        inner join
                    (select item_id, user_id, group_id, type
                     from im.members
                     where user_id = ${user_id}
-                    union all
-                    select item_id, user_id, friend_id, type
-                    from im.friends
-                    where user_id = ${user_id}) as e) as c
+                   ) as e) as c
                  inner join im.groups on groups.group_id = c.group_id and type = 1
         union all
         select c.user_id,
                c.user_name,
-               user_phone,
-               group_id        as contact_id,
-               users.user_name as contact_name,
-               user_img        as contact_img,
-               type
+               c.friend_id         as contact_id,
+               users.user_name     as contact_name,
+               users.user_phone    as contact_phone,
+               users.user_img      as contact_img,
+               friends.friend_note as contact_note,
+               c.type              as contact_type
         from (select *
               from (select user_name from users where user_id = ${user_id}) as s
                        inner join
-                   (select item_id, user_id, group_id, type
-                    from im.members
-                    where user_id = ${user_id}
-                    union all
-                    select item_id, user_id, friend_id, type
+                   (select item_id, user_id, friend_id, type
                     from im.friends
                     where user_id = ${user_id}) as e) as c
-                 inner join users on c.group_id = users.user_id and type = 0
+                 inner join users on c.friend_id = users.user_id and type = 0
+                 inner join friends on c.friend_id = friends.friend_id and c.user_id = friends.user_id
+
     </select>
 
     <select id="getContacts2" parameterType="bean.User" resultType="bean.Contact">
